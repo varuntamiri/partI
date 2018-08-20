@@ -1,0 +1,69 @@
+<style>
+    input.ng-dirty.ng-invalid {
+        border: 2px solid #ff0000
+    }
+
+    input.ng-dirty.ng-valid {
+        border: 2px solid #6bc502
+    }
+</style>
+
+<form novalidate #form="ngForm" (ngSubmit)="submitForm(form)">
+    <div class="bg-danger p-a-1 m-b-1" *ngIf="formSubmitted && form.invalid">
+        There are problems with the form
+        <ul>
+            <li *ngFor="let error of getFormValidationMessages(form)">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" name="name" [(ngModel)]="newProduct.name" #name="ngModel" required minlength="5" pattern="^[A-Za-z ]+$"
+        />
+        <ul class="text-danger list-unstyled" *ngIf="formSubmitted && name.invalid">
+            <li *ngFor="let error of getValidationMessages(name)">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="form-group">
+        <label>Category</label>
+        <input class="form-control" name="category" [(ngModel)]="newProduct.category" #category="ngModel" required minlength="5"
+            pattern="^[A-Za-z ]+$" />
+        <ul class="text-danger list-unstyled" *ngIf="formSubmitted && category.invalid">
+            <li *ngFor="let error of getValidationMessages(category)">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="form-group">
+        <label>Price</label>
+        <input class="form-control" name="price" [(ngModel)]="newProduct.price" #price="ngModel" required pattern="^[0-9\.]+$" />
+
+        <ul class="text-danger list-unstyled" *ngIf="formSubmitted && price.invalid">
+
+            <li *ngFor="let error of getValidationMessages(price)">
+                {{error}}
+            </li>
+
+        </ul>
+
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="formSubmitted && form.invalid" [class.btn-secondary]="formSubmitted && form.invalid">
+        Create
+    </button>
+
+</form>
+
+<!--
+    <div class="bg-info m-t-1 p-a-1">
+    View Child Value: <span paDisplayValue></span>
+    </div>
+    <div class="bg-info m-t-1 p-a-1">
+    Content Child Value: <ng-content></ng-content>
+    </div>
+    -->
